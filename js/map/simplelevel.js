@@ -48,6 +48,7 @@ class SimpleLevel extends Phaser.State {
     create() {
         this._loadLevel();
         this._loadCreature();
+       // this.overlay = this.game.add.image(0, 0, 'overlay');
     }
     update() {
         this._checkCollision();

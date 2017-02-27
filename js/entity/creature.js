@@ -60,10 +60,10 @@ class Creature extends Phaser.Sprite {
 
 
     _behaviourGenerator() {
-         console.log('behaviourGeneneratorFired!!! NavigatorAlive is: ' + this.navigatorAlive);
-        var generator = Math.random() * (4 - 1) + 1;
+//         console.log('behaviourGeneneratorFired!!! NavigatorAlive is: ' + this.navigatorAlive);
+        var generator = Math.random() * (5 - 1) + 1;
         generator = Math.floor(generator);
-        console.log('generator is: ' + generator)
+        //console.log('generator is: ' + generator)
         if (this.navigatorAlive === false && generator === 2) {
             var leftSpawnArea = Math.random() * (250 - 10) + 10;
             var rightSpawnArea = Math.random() * (640 - 400) + 400;
@@ -75,9 +75,9 @@ class Creature extends Phaser.Sprite {
                 } else if (selector === 2 && this.navigatorAlive === false) {
                     this._generateNavigator(leftSpawnArea, 360);
                 }
-                          console.log('Generator Check Fired! target is in the middle space');
+//                          console.log('Generator Check Fired! target is in the middle space');
             } else if (this.navigatorAlive === false && this.y > 250 || this.y < 130 && this.body.blocked.down) {
-                          console.log('Generator Check Fired! target is not in the middle space');
+//                          console.log('Generator Check Fired! target is not in the middle space');
                 this._generateNavigator(rightSpawnArea, 30);
             }
         }
@@ -85,12 +85,6 @@ class Creature extends Phaser.Sprite {
             this._behaviourGenerator();
         }, this);
     }
-
-
-
-
-
-
 
     _moveTo() {
         //        console.log('MoveTo Fired');
@@ -108,17 +102,12 @@ class Creature extends Phaser.Sprite {
         }
     }
 
-
-
-
-
     _initCursor() {
         this.cursor = this.game.add.group();
         this.cursor.enableBody = true;
         this.cursor.physicsBodyType = Phaser.Physics.ARCADE;
         this.cursor.setAll('body.collideWorldBounds', true);
     }
-
 
     _generateNavigator(x, y) {
         //        if (this.navigatorAlive === true) {
@@ -167,7 +156,6 @@ class Creature extends Phaser.Sprite {
         }
 
         if (this.navigatorAlive === true) {
-
             if (this.x < this.target.x) {
                 this.body.velocity.x = 70;
                 if (this.body.blocked.right && this.y > this.target.y - 10) {
@@ -180,16 +168,11 @@ class Creature extends Phaser.Sprite {
                     this.body.velocity.y = -40;
                 }
             }
-
-
             if (this.y < this.target.y) {
                 this.body.allowGravity = true;
             } else {
                 this.body.allowGravity = false;
-                this.body.velocity.y - 20;
             }
-
-
         }
 
         var direction;
