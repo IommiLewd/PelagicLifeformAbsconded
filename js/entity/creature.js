@@ -18,10 +18,11 @@ class Creature extends Phaser.Sprite {
         this._map = game.add.tilemap('mainMap');
         this._initCursor();
         this._creatureModeSelector();
-
+        this._behaviourGenerator();
 
     }
     _creatureModeSelector() {
+      //  console.log('creaturemode fired  Navigator Alive is: ' + this.navigatorAlive);
         if (this.navigatorAlive === false) {
             this._creatureRandomMovement();
         } else {
@@ -30,8 +31,8 @@ class Creature extends Phaser.Sprite {
     }
 
     _creatureRandomMovement() {
-        console.log('RandomMovementFired!!!');
-        this.seededTimer = Math.random() * (8 - 1) + 1;
+      //  console.log('RandomMovementFired!!!');
+        this.seededTimer = Math.random() * (7 - 1) + 1;
         this.game.time.events.add(Phaser.Timer.SECOND * this.seededTimer, function () {
             this.randomMovement = Math.random() * (5 - 1) + 1;
             this.randomVelocity = Math.random() * (41 - 10) + 10;
@@ -58,19 +59,41 @@ class Creature extends Phaser.Sprite {
     }
 
 
-    _behaviourGenerator(){
-        //if this.body.x < 128 spawn arrow on right side ov screen
-        // 
+    _behaviourGenerator() {
+         console.log('behaviourGeneneratorFired!!! NavigatorAlive is: ' + this.navigatorAlive);
+        var generator = Math.random() * (4 - 1) + 1;
+        generator = Math.floor(generator);
+        console.log('generator is: ' + generator)
+        if (this.navigatorAlive === false && generator === 2) {
+            var leftSpawnArea = Math.random() * (250 - 10) + 10;
+            var rightSpawnArea = Math.random() * (640 - 400) + 400;
+            if (this.y < 250 && this.y > 190 && this.body.blocked.down && this.navigatorAlive === false) {
+                var selector = Math.random() * (3 - 0) - 0;
+                selector = Math.floor(selector);
+                if (selector === 1 && this.navigatorAlive === false) {
+                    this._generateNavigator(leftSpawnArea, 30);
+                } else if (selector === 2 && this.navigatorAlive === false) {
+                    this._generateNavigator(leftSpawnArea, 360);
+                }
+                          console.log('Generator Check Fired! target is in the middle space');
+            } else if (this.navigatorAlive === false && this.y > 250 || this.y < 130 && this.body.blocked.down) {
+                          console.log('Generator Check Fired! target is not in the middle space');
+                this._generateNavigator(rightSpawnArea, 30);
+            }
+        }
+        this.game.time.events.add(Phaser.Timer.SECOND * 5, function () {
+            this._behaviourGenerator();
+        }, this);
     }
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
 
     _moveTo() {
-        console.log('MoveTo Fired');
+        //        console.log('MoveTo Fired');
         if (this.x < this.target.x) {
             this.body.velocity.x = 70;
             if (this.body.blocked.right) {
@@ -96,7 +119,21 @@ class Creature extends Phaser.Sprite {
         this.cursor.setAll('body.collideWorldBounds', true);
     }
 
-    _addNavigator(x,y) {
+
+    _generateNavigator(x, y) {
+        //        if (this.navigatorAlive === true) {
+        //            this._cursorReset();
+        //        }
+        this.target = this.cursor.create(x, y, 'pointer');
+        //this.target = this.cursor.create(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 'pointer');
+        this.target.body.bounce.set(0.2);
+        this.navigatorAlive = true;
+        this.target.anchor.setTo(0.5);
+        this.target.body.collideWorldBounds = true;
+    }
+
+    _addNavigator(x, y) {
+        //  this.target = this.cursor.create(x, y, 'pointer');
         this.target = this.cursor.create(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 'pointer');
         this.target.body.bounce.set(0.2);
         this.navigatorAlive = true;
@@ -149,6 +186,7 @@ class Creature extends Phaser.Sprite {
                 this.body.allowGravity = true;
             } else {
                 this.body.allowGravity = false;
+                this.body.velocity.y - 20;
             }
 
 
