@@ -61,7 +61,7 @@ class Creature extends Phaser.Sprite {
 
     _behaviourGenerator() {
 //         console.log('behaviourGeneneratorFired!!! NavigatorAlive is: ' + this.navigatorAlive);
-        var generator = Math.random() * (5 - 1) + 1;
+        var generator = Math.random() * (6 - 1) + 1;
         generator = Math.floor(generator);
         //console.log('generator is: ' + generator)
         if (this.navigatorAlive === false && generator === 2) {
@@ -78,10 +78,10 @@ class Creature extends Phaser.Sprite {
 //                          console.log('Generator Check Fired! target is in the middle space');
             } else if (this.navigatorAlive === false && this.y > 250 || this.y < 130 && this.body.blocked.down) {
 //                          console.log('Generator Check Fired! target is not in the middle space');
-                this._generateNavigator(rightSpawnArea, 30);
+                this._generateNavigator(rightSpawnArea, 130);
             }
         }
-        this.game.time.events.add(Phaser.Timer.SECOND * 5, function () {
+        this.game.time.events.add(Phaser.Timer.SECOND * 8, function () {
             this._behaviourGenerator();
         }, this);
     }
