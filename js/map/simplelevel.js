@@ -1,12 +1,3 @@
-/**
- * base class for a simple game level.
- *
- * @constructor  {}
- * @method   :
- * @property :
- * startPosition {} (x,y)
- */
-
 class SimpleLevel extends Phaser.State {
     constructor() {
         super();
@@ -16,22 +7,14 @@ class SimpleLevel extends Phaser.State {
         this.game.canvas.oncontextmenu = function (e) {
                 e.preventDefault();
             }
-            // this.game.stage.backgroundColor = "#4488AA";
         this._backgroundImage = this.game.add.image(0, 0, 'backTiles');
         this._map = this.add.tilemap('mainMap');
         this._map.addTilesetImage('tileset', 'tileset');
-        //        //create layers
-        //        this._back_tiles = this._map.createLayer('BackTiles');
         this._background_layer = this._map.createLayer('BackgroundLayer');
         this._collision_layer = this._map.createLayer('CollisionLayer');
-        //this._collision_layer.resizeWorld();
         this._map.setCollisionBetween(0, 160, true, this._collision_layer);
-        //        this._ladder_layer = this._map.createLayer('LadderLayer');
         this._front_layer = this._map.createLayer('ForegroundLayer');
-        //        this._front_layer.bringToTop();
-        //        this.game.world.sendToBack(this._background_layer);
-        //        this.game.world.sendToBack(this._back_tiles);
-        //        this.game.world.sendToBack(this.background);
+
     }
     _loadCreature() {
         this.creature = new Creature(this.game, 80, 20, 'creature' /*, this.map*/ );
