@@ -24,7 +24,7 @@ class SimpleLevel extends Phaser.State {
         //        this._back_tiles = this._map.createLayer('BackTiles');
         this._background_layer = this._map.createLayer('BackgroundLayer');
         this._collision_layer = this._map.createLayer('CollisionLayer');
-        this._collision_layer.resizeWorld();
+        //this._collision_layer.resizeWorld();
         this._map.setCollisionBetween(0, 160, true, this._collision_layer);
         //        this._ladder_layer = this._map.createLayer('LadderLayer');
         this._front_layer = this._map.createLayer('ForegroundLayer');

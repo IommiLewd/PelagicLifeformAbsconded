@@ -1,0 +1,10 @@
+body {
+    background-color: black;
+}
+
+#phaser-example {
+    border: 1px solid white;
+    width: 896px;
+    margin-left: auto;
+    margin-right: auto;
+}
