@@ -22,7 +22,7 @@ class Creature extends Phaser.Sprite {
 
     }
     _creatureModeSelector() {
-      //  console.log('creaturemode fired  Navigator Alive is: ' + this.navigatorAlive);
+        //  console.log('creaturemode fired  Navigator Alive is: ' + this.navigatorAlive);
         if (this.navigatorAlive === false) {
             this._creatureRandomMovement();
         } else {
@@ -31,7 +31,7 @@ class Creature extends Phaser.Sprite {
     }
 
     _creatureRandomMovement() {
-      //  console.log('RandomMovementFired!!!');
+        //  console.log('RandomMovementFired!!!');
         this.seededTimer = Math.random() * (7 - 1) + 1;
         this.game.time.events.add(Phaser.Timer.SECOND * this.seededTimer, function () {
             this.randomMovement = Math.random() * (5 - 1) + 1;
@@ -60,7 +60,7 @@ class Creature extends Phaser.Sprite {
 
 
     _behaviourGenerator() {
-//         console.log('behaviourGeneneratorFired!!! NavigatorAlive is: ' + this.navigatorAlive);
+        //         console.log('behaviourGeneneratorFired!!! NavigatorAlive is: ' + this.navigatorAlive);
         var generator = Math.random() * (6 - 1) + 1;
         generator = Math.floor(generator);
         //console.log('generator is: ' + generator)
@@ -75,9 +75,9 @@ class Creature extends Phaser.Sprite {
                 } else if (selector === 2 && this.navigatorAlive === false) {
                     this._generateNavigator(leftSpawnArea, 360);
                 }
-//                          console.log('Generator Check Fired! target is in the middle space');
+                //                          console.log('Generator Check Fired! target is in the middle space');
             } else if (this.navigatorAlive === false && this.y > 250 || this.y < 130 && this.body.blocked.down) {
-//                          console.log('Generator Check Fired! target is not in the middle space');
+                //                          console.log('Generator Check Fired! target is not in the middle space');
                 this._generateNavigator(rightSpawnArea, 130);
             }
         }
@@ -99,6 +99,7 @@ class Creature extends Phaser.Sprite {
             if (this.body.blocked.left) {
                 this.body.velocity.y = -60;
             }
+            
         }
     }
 
