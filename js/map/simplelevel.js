@@ -20,6 +20,13 @@ class SimpleLevel extends Phaser.State {
         this.creature = new Creature(this.game, 80, 20, 'creature' /*, this.map*/ );
         this.game.world.bringToTop(this._front_layer);
     }
+    
+    _addScientist(){
+        //276
+        this.lift = this.game.add.image(768, -50, 'lift');
+        this.lift.anchor.setTo(0.5);
+        this.game.add.tween(this.lift).to( { y: 276 }, 4000, Phaser.Easing.Linear.Out, true);
+    }
     _checkCollision() {
         this.game.physics.arcade.collide(this.creature, this._collision_layer);
        this.game.physics.arcade.collide(this.creature.target, this._collision_layer);
@@ -31,7 +38,8 @@ class SimpleLevel extends Phaser.State {
     create() {
         this._loadLevel();
         this._loadCreature();
-        this.overlay = this.game.add.image(0, 0, 'overlay');
+        this._addScientist();
+        //this.overlay = this.game.add.image(0, 0, 'overlay');
     }
     update() {
         this._checkCollision();
