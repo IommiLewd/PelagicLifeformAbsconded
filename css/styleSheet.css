@@ -3,7 +3,7 @@ body {
 }
 
 #phaser-example {
-/*    border: 1px solid white;*/
+   border: 2px solid DarkSlateGrey;
     width: 896px;
     margin-left: auto;
     margin-right: auto;

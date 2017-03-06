@@ -20,10 +20,11 @@ class Narrator extends Phaser.Sprite {
             "Probably the main attraction, really.",
             "This is the Pyronasal RNA -",
             "- In its most potent form, yet.",
-            " ... ",
+            " *cough* ",
             "We've regulated temperature, -",
-            "- And gently decresed Atmospheric Pressure.",
-            "Leading to a mass gain of 30% so far.",
+            "- And gently decresed Atmospheric Pressure, -",
+            " - Combined with the fungi, -",
+            "- has lead to a mass gain of 30% so far.",
             "You have Access to the dossiers, -",
             "- Upper left corner."
         ]
@@ -46,14 +47,14 @@ class Narrator extends Phaser.Sprite {
             this.game.time.events.add(Phaser.Timer.SECOND * 8, this._dialogue, this);
         } else if (this.dialogueProgress === this.scientistSays.length) {
 
-         this.stuffSaid.destroy();
+            this.stuffSaid.destroy();
             this.animations.play('idle', 2, true);
         } else {
             this.stuffSaid.setText(this.scientistSays[this.dialogueProgress]);
             this.game.time.events.add(Phaser.Timer.SECOND * 8, this._dialogue, this);
         }
         this.dialogueProgress++;
-console.log('Dialogue just ran. DialogueProgress is: ' + this.dialogueProgress + ' scientistSays.length is' + this.scientistSays.length);
+        //console.log('Dialogue just ran. DialogueProgress is: ' + this.dialogueProgress + ' scientistSays.length is' + this.scientistSays.length);
     }
 
 
@@ -74,7 +75,11 @@ console.log('Dialogue just ran. DialogueProgress is: ' + this.dialogueProgress +
         this.movementHandler = this.game.add.tween(this).to({
             y: -100
         }, 4000, Phaser.Easing.Linear.Out, true);
-         this.game.state.start('SimpleLevel');
+        this.dialogueProgress = this.scientistSays.length;
+        this.stuffSaid.alpha = 0.0;
+        this.movementHandler.onComplete.add(function () {
+            this.game.state.start('SimpleLevel');
+        }, this);
     }
 
     _elevatorDown() {
@@ -82,6 +87,11 @@ console.log('Dialogue just ran. DialogueProgress is: ' + this.dialogueProgress +
         this.movementHandler = this.game.add.tween(this).to({
             y: 500
         }, 4000, Phaser.Easing.Linear.Out, true);
+        this.dialogueProgress = this.scientistSays.length;
+        this.stuffSaid.alpha = 0.0;
+        this.movementHandler.onComplete.add(function () {
+            this.game.state.start('SimpleLevel');
+        }, this);
     }
 
 
