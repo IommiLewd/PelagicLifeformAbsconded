@@ -66,7 +66,7 @@ class Creature extends Phaser.Sprite {
         //console.log('generator is: ' + generator)
         if (this.navigatorAlive === false && generator === 2) {
             var leftSpawnArea = Math.random() * (250 - 10) + 10;
-            var rightSpawnArea = Math.random() * (640 - 400) + 400;
+            var rightSpawnArea = Math.random() * (620 - 400) + 400;
             if (this.y < 250 && this.y > 190 && this.body.blocked.down && this.navigatorAlive === false) {
                 var selector = Math.random() * (3 - 0) - 0;
                 selector = Math.floor(selector);
@@ -145,16 +145,16 @@ class Creature extends Phaser.Sprite {
                 this._cursorReset();
             }
         }
-        if (this.game.input.activePointer.leftButton.isDown && this.game.time.now > this.inputTimer) {
-            this.inputTimer = this.game.time.now + 200;
-            this.testcoordinate = this._map.getTileWorldXY(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 64, 64, 'CollisionLayer');
-            if (!this.testcoordinate && this.navigatorAlive === false) {
-                this._addNavigator();
-            } else if (!this.testcoordinate) {
-                this._cursorReset();
-                this._addNavigator();
-            }
-        }
+//        if (this.game.input.activePointer.leftButton.isDown && this.game.time.now > this.inputTimer) {
+//            this.inputTimer = this.game.time.now + 200;
+//            this.testcoordinate = this._map.getTileWorldXY(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 64, 64, 'CollisionLayer');
+//            if (!this.testcoordinate && this.navigatorAlive === false) {
+//                this._addNavigator();
+//            } else if (!this.testcoordinate) {
+//                this._cursorReset();
+//                this._addNavigator();
+//            }
+//        }
 
         if (this.navigatorAlive === true) {
             if (this.x < this.target.x) {
@@ -174,6 +174,8 @@ class Creature extends Phaser.Sprite {
             } else {
                 this.body.allowGravity = false;
             }
+        } else {
+            this.body.allowGravity = true;
         }
 
         var direction;
