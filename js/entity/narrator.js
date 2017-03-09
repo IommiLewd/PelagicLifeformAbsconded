@@ -22,8 +22,8 @@ class Narrator extends Phaser.Sprite {
             "- In its most potent form, yet.",
             " *cough* ",
             "We've regulated temperature, -",
-            "- And gently decresed Atmospheric Pressure, -",
-            " - Combined with the fungi, -",
+            "- And gently decresed Atmospheric Pressure.",
+            "That combined with the fungi, -",
             "- has lead to a mass gain of 30% so far.",
             "You have Access to the dossiers, -",
             "- Upper left corner."

@@ -9,7 +9,8 @@ class Preload extends Phaser.State {
         this.load.image('overlay', 'img/overlay.png');
         this.load.script('Creature', 'js/entity/creature.js');
         this.load.script('narrator', 'js/entity/narrator.js');
-        this.load.script('simpleLevel', 'js/map/simplelevel.js');
+        this.load.script('TankTwo', 'js/map/TankTwo.js');
+        this.load.script('TankOne', 'js/map/TankOne.js');
         this.load.tilemap('mainMap', 'json/mainMap.json', null, Phaser.Tilemap.TILED_JSON); 
         
         
@@ -28,8 +29,13 @@ class Preload extends Phaser.State {
     }
     create() {
         console.log("Preload.js:  Preload.create-> load_Level");
-        this.game.state.add('SimpleLevel', SimpleLevel);
-        this.game.state.start('SimpleLevel');
+        this.game.state.add('TankTwo', TankTwo);
+        this.game.state.start('TankTwo');
+        
+//         this.game.state.add('TankOne', TankOne);
+//        this.game.state.start('TankOne');
+        
+        
     }
 
 }

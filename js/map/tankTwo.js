@@ -1,4 +1,4 @@
-class SimpleLevel extends Phaser.State {
+class TankTwo extends Phaser.State {
     constructor() {
         super();
     }
