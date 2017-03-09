@@ -1,6 +1,6 @@
 class Narrator extends Phaser.Sprite {
-    constructor(game, x, y, key) {
-        super(game, x, y, key);
+    constructor(game, x, y, key, map) {
+        super(game, x, y, key, map);
         game.add.existing(this);
         this.anchor.setTo(0.5);
         this.idleAnimation = this.animations.add('idle', [0, 1, 2, 3]);
@@ -14,7 +14,15 @@ class Narrator extends Phaser.Sprite {
         this.UiEnabled = false;
         this._initUi();
 
-        this.scientistSays = [
+
+        if (map === 2) {
+            this.scientistSays = [
+                "This is tank one.",
+                "Noone gave me notes about this one."
+        ]
+        }
+        if (map === 3) {
+            this.scientistSays = [
             "Greetings Director, to tank Two.",
             "In here we keep the Tricephallus Sanctipauli.",
             "Probably the main attraction, really.",
@@ -28,6 +36,15 @@ class Narrator extends Phaser.Sprite {
             "You have Access to the dossiers, -",
             "- Upper left corner."
         ]
+        }
+            if (map === 4) {
+            this.scientistSays = [
+                "This is tank Two.",
+                "I think someone peed in there.."
+        ]
+        }
+        
+        
         this.dialogueProgress = 0;
     }
 
@@ -78,7 +95,7 @@ class Narrator extends Phaser.Sprite {
         this.dialogueProgress = this.scientistSays.length;
         this.stuffSaid.alpha = 0.0;
         this.movementHandler.onComplete.add(function () {
-            this.game.state.start('SimpleLevel');
+            this.game.state.start('TankOne');
         }, this);
     }
 
@@ -90,7 +107,7 @@ class Narrator extends Phaser.Sprite {
         this.dialogueProgress = this.scientistSays.length;
         this.stuffSaid.alpha = 0.0;
         this.movementHandler.onComplete.add(function () {
-            this.game.state.start('SimpleLevel');
+            this.game.state.start('TankTwo');
         }, this);
     }
 

@@ -23,7 +23,7 @@ class TankTwo extends Phaser.State {
     
     
     _addNarrator(){
-        this.narrator = new Narrator(this.game, 768, 300, 'rowan');
+        this.narrator = new Narrator(this.game, 768, 300, 'rowan', 3);
     }
     _checkCollision() {
         this.game.physics.arcade.collide(this.creature, this._collision_layer);

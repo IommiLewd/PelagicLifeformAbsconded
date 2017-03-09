@@ -8,8 +8,8 @@ class TankOne extends Phaser.State {
                 e.preventDefault();
             }
         this._backgroundImage = this.game.add.image(0, 0, 'backTiles');
-        this._map = this.add.tilemap('mainMap');
-        this._map.addTilesetImage('tileset', 'tileset');
+        this._map = this.add.tilemap('tankOne');
+        this._map.addTilesetImage('tilesetOne', 'tilesetOne');
         this._background_layer = this._map.createLayer('BackgroundLayer');
         this._collision_layer = this._map.createLayer('CollisionLayer');
         this._map.setCollisionBetween(0, 160, true, this._collision_layer);
@@ -23,7 +23,7 @@ class TankOne extends Phaser.State {
     
     
     _addNarrator(){
-        this.narrator = new Narrator(this.game, 768, 300, 'rowan');
+        this.narrator = new Narrator(this.game, 768, 300, 'rowan', 2);
     }
     _checkCollision() {
         this.game.physics.arcade.collide(this.creature, this._collision_layer);
@@ -35,7 +35,7 @@ class TankOne extends Phaser.State {
     }
     create() {
         console.log('Tank one fired!!!');
-       /* this._loadLevel();
+        this._loadLevel();
         this._loadCreature();
         //this._addScientist();
         this._addNarrator();
