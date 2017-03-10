@@ -13,6 +13,7 @@ class Preload extends Phaser.State {
         this.load.image('tileset', 'img/tileset.png');
         this.load.image('tilesetOne', 'img/tilesetOne.png');
         this.load.image('tilesetThree', 'img/tilesetThree.png');
+        this.load.image('dialogBox', 'img/dialogBox.png');
 
         this.load.script('Creature', 'js/entity/creature.js');
         this.load.script('narrator', 'js/entity/narrator.js');
@@ -48,9 +49,9 @@ class Preload extends Phaser.State {
           this.game.state.add('TankTwo', TankTwo);
           this.game.state.add('TankThree', TankThree);
         
-//        this.game.state.start('TankOne');
-//        this.game.state.start('TankTwo');
-        this.game.state.start('TankThree');
+       this.game.state.start('TankOne');
+      // this.game.state.start('TankTwo');
+       //this.game.state.start('TankThree');
         console.log(elevatorGoingDown);
 
     }
