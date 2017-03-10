@@ -6,14 +6,25 @@ class Narrator extends Phaser.Sprite {
         this.idleAnimation = this.animations.add('idle', [0, 1, 2, 3]);
         this.talkAnimation = this.animations.add('talk', [4, 5, 6, 7]);
         this.animations.play('idle', 2, true);
+        this.endPos = y;
+        
+        if(elevatorGoingDown === true){
         this.y = -100;
+        }else {
+                this.y = 500;
+            }
         this._elevatorIn();
         this.lift = this.game.add.image(0, 48, 'lift');
         this.lift.anchor.setTo(0.5);
         this.addChild(this.lift);
         this.UiEnabled = false;
-        this._initUi();
-
+        //this._initUi();
+        if (map === 1) {
+            this.scientistSays = [
+                "This is the Laboratory",
+                "undoubtedly great things will be dicovered here."
+        ]
+        }
 
         if (map === 2) {
             this.scientistSays = [
@@ -28,7 +39,7 @@ class Narrator extends Phaser.Sprite {
             "Probably the main attraction, really.",
             "This is the Pyronasal RNA -",
             "- In its most potent form, yet.",
-            " *cough* ",
+            " ... ",
             "We've regulated temperature, -",
             "- And gently decresed Atmospheric Pressure.",
             "That combined with the fungi, -",
@@ -37,14 +48,12 @@ class Narrator extends Phaser.Sprite {
             "- Upper left corner."
         ]
         }
-            if (map === 4) {
+        if (map === 4) {
             this.scientistSays = [
-                "This is tank Two.",
-                "I think someone peed in there.."
-        ]
+                "This is tank Three.",
+                "I think someone peed in there."
+            ]
         }
-        
-        
         this.dialogueProgress = 0;
     }
 
@@ -78,11 +87,11 @@ class Narrator extends Phaser.Sprite {
 
     _elevatorIn() {
         this.movementHandler = this.game.add.tween(this).to({
-            y: 206
+            y: this.endPos
         }, 4000, Phaser.Easing.Linear.Out, true);
         this.movementHandler.onComplete.add(function () {
             this.animations.play('talk', 6, true);
-            //this._initUi();
+            this._initUi();
             this._dialogue();
         }, this);
     }
@@ -97,6 +106,7 @@ class Narrator extends Phaser.Sprite {
         this.movementHandler.onComplete.add(function () {
             this.game.state.start('TankOne');
         }, this);
+        elevatorGoingDown = false;
     }
 
     _elevatorDown() {
@@ -109,6 +119,7 @@ class Narrator extends Phaser.Sprite {
         this.movementHandler.onComplete.add(function () {
             this.game.state.start('TankTwo');
         }, this);
+        elevatorGoingDown = true;
     }
 
 
@@ -126,12 +137,12 @@ class Narrator extends Phaser.Sprite {
         this.openButton.anchor.setTo(0.5);
         this.openButton.inputEnabled = true;
 
-        this.upArrow = this.game.add.sprite(770, 26, 'upArrow');
+        this.upArrow = this.game.add.sprite(this.x, 90, 'upArrow');
         this.upArrow.anchor.setTo(0.5);
         this.upArrow.inputEnabled = true;
         this.upArrow.events.onInputDown.add(this._elevatorUp, this);
 
-        this.downArrow = this.game.add.sprite(770, 364, 'downArrow');
+        this.downArrow = this.game.add.sprite(this.x, 120, 'downArrow');
         this.downArrow.anchor.setTo(0.5);
         this.downArrow.inputEnabled = true;
         this.downArrow.events.onInputDown.add(this._elevatorDown, this);

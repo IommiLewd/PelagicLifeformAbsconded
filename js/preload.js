@@ -1,5 +1,4 @@
-
-var testOfGlobal = 1;
+var elevatorGoingDown = true;
 
 class Preload extends Phaser.State {
     preload() {
@@ -8,15 +7,24 @@ class Preload extends Phaser.State {
         this.load.image('creature', 'img/creatureTemplate.png');
         this.load.image('pointer', 'img/pointer.png');
         this.load.image('backTiles', 'img/backTiles.png');
+
+        this.load.image('overlay', 'img/overlay.png');
+
         this.load.image('tileset', 'img/tileset.png');
         this.load.image('tilesetOne', 'img/tilesetOne.png');
-        this.load.image('overlay', 'img/overlay.png');
+        this.load.image('tilesetThree', 'img/tilesetThree.png');
+
         this.load.script('Creature', 'js/entity/creature.js');
         this.load.script('narrator', 'js/entity/narrator.js');
-        this.load.script('TankTwo', 'js/map/TankTwo.js');
+
         this.load.script('TankOne', 'js/map/TankOne.js');
+        this.load.script('TankTwo', 'js/map/TankTwo.js');
+        this.load.script('TankThree', 'js/map/TankThree.js');
+        
+
         this.load.tilemap('mainMap', 'json/mainMap.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.tilemap('tankOne', 'json/tankOne.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('tankThree', 'json/tankThree.json', null, Phaser.Tilemap.TILED_JSON);
 
 
         //Narrator Related
@@ -34,12 +42,16 @@ class Preload extends Phaser.State {
     }
     create() {
         console.log("Preload.js:  Preload.create-> load_Level");
-        this.game.state.add('TankTwo', TankTwo);
-        //        this.game.state.start('TankTwo');
+      
 
         this.game.state.add('TankOne', TankOne);
-        this.game.state.start('TankOne');
-        console.log(testOfGlobal);
+          this.game.state.add('TankTwo', TankTwo);
+          this.game.state.add('TankThree', TankThree);
+        
+//        this.game.state.start('TankOne');
+//        this.game.state.start('TankTwo');
+        this.game.state.start('TankThree');
+        console.log(elevatorGoingDown);
 
     }
 

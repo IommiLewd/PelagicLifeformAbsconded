@@ -1,4 +1,4 @@
-class TankTwo extends Phaser.State {
+class TankThree extends Phaser.State {
     constructor() {
         super();
     }
@@ -8,8 +8,8 @@ class TankTwo extends Phaser.State {
                 e.preventDefault();
             }
         this._backgroundImage = this.game.add.image(0, 0, 'backTiles');
-        this._map = this.add.tilemap('mainMap');
-        this._map.addTilesetImage('tileset', 'tileset');
+        this._map = this.add.tilemap('tankThree');
+        this._map.addTilesetImage('tilesetThree', 'tilesetThree');
         this._background_layer = this._map.createLayer('BackgroundLayer');
         this._collision_layer = this._map.createLayer('CollisionLayer');
         this._map.setCollisionBetween(0, 160, true, this._collision_layer);
@@ -23,7 +23,7 @@ class TankTwo extends Phaser.State {
     
     
     _addNarrator(){
-        this.narrator = new Narrator(this.game, 768, 206, 'rowan', 3);
+        this.narrator = new Narrator(this.game, 576, 148, 'rowan', 2);
     }
     _checkCollision() {
         this.game.physics.arcade.collide(this.creature, this._collision_layer);
@@ -34,14 +34,15 @@ class TankTwo extends Phaser.State {
 
     }
     create() {
+        console.log('Tank Three fired!!!');
         this._loadLevel();
-        this._loadCreature();
+        //this._loadCreature();
         //this._addScientist();
         this._addNarrator();
-        //this.overlay = this.game.add.image(0, 0, 'overlay');
+        //this.overlay = this.game.add.image(0, 0, 'overlay');*/
     }
     update() {
-        this._checkCollision();
+      //  this._checkCollision();
 
     }
 }
