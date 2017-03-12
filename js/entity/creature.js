@@ -19,6 +19,10 @@ class Creature extends Phaser.Sprite {
         this._initCursor();
         this._creatureModeSelector();
         this._behaviourGenerator();
+         this.idleAnimation = this.animations.add('idle', [0, 1, 2, 3, 4 ,5]);
+         //this.idleAnimation = this.animations.add('idle', [6, 7, 8, 9, 10, 11]);
+        this.animations.play('idle', 6, true);
+        this.scale.setTo(1.1, 1.1);
 
     }
     _creatureModeSelector() {
@@ -180,10 +184,10 @@ class Creature extends Phaser.Sprite {
 
         var direction;
         if (this.body.velocity.x > 0) {
-            this.scale.setTo(-1, 1);
+           // this.scale.setTo(-1, 1);
             direction = 1;
         } else {
-            this.scale.setTo(1, 1);
+            //this.scale.setTo(1, 1);
             direction = -1;
         }
         var nextX = this.x + direction * (Math.abs(this.width) / 2 + 1);

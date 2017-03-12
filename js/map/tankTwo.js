@@ -17,7 +17,7 @@ class TankTwo extends Phaser.State {
 
     }
     _loadCreature() {
-        this.creature = new Creature(this.game, 80, 20, 'creature' /*, this.map*/ );
+        this.creature = new Creature(this.game, 200, 120, 'SlaughterFish' /*, this.map*/ );
         this.game.world.bringToTop(this._front_layer);
     }
     

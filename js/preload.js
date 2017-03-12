@@ -33,6 +33,7 @@ class Preload extends Phaser.State {
         //Narrator Related
         this.load.image('lift', 'img/lift.png');
         this.game.load.spritesheet('rowan', 'img/tilesheets/rowan.png', 30, 110, 8);
+        this.game.load.spritesheet('SlaughterFish', 'img/tilesheets/slaughterFishSpriteSheet.png', 40, 40, 6);
 
         //Ui Related
         this.game.load.spritesheet('feedButton', 'img/Ui/feedButton.png', 28, 28, 3);
@@ -40,7 +41,7 @@ class Preload extends Phaser.State {
         this.game.load.spritesheet('infoButton', 'img/Ui/infoButton.png', 28, 28, 3);
         this.game.load.spritesheet('upArrow', 'img/Ui/upArrow.png', 32, 22, 3);
         this.game.load.spritesheet('downArrow', 'img/Ui/downArrow.png', 32, 22, 3);
-
+        this.load.image('floorCounter', 'img/Ui/floorCounter.png');
 
     }
     create() {
@@ -52,9 +53,9 @@ class Preload extends Phaser.State {
           this.game.state.add('TankThree', TankThree);
           this.game.state.add('Laboratory', Laboratory);
         
-      // this.game.state.start('TankOne');
-       this.game.state.start('Laboratory');
-      // this.game.state.start('TankTwo');
+      //this.game.state.start('TankOne');
+       //this.game.state.start('Laboratory');
+       this.game.state.start('TankTwo');
        //this.game.state.start('TankThree');
         console.log(elevatorGoingDown);
 

@@ -128,6 +128,8 @@ class Narrator extends Phaser.Sprite {
         }, 4000, Phaser.Easing.Linear.Out, true);
         this.dialogueProgress = this.scientistSays.length;
         this.stuffSaid.alpha = 0.0;
+        this.floorCount.alpha = 0.0;
+        this.floorCounter.alpha = 0.0;
         this.textBox.alpha = 0.0;
         this.movementHandler.onComplete.add(function () {
 
@@ -158,6 +160,8 @@ class Narrator extends Phaser.Sprite {
         }, 4000, Phaser.Easing.Linear.Out, true);
         this.dialogueProgress = this.scientistSays.length;
         this.stuffSaid.alpha = 0.0;
+        this.floorCount.alpha = 0.0;
+        this.floorCounter.alpha = 0.0;
         this.textBox.alpha = 0.0;
         this.movementHandler.onComplete.add(function () {
             if (this.currentMap === 1) {
@@ -175,6 +179,17 @@ class Narrator extends Phaser.Sprite {
 
 
     _initUi() {
+        this.floorCounter = this.game.add.sprite(0, -98 - 4, 'floorCounter');
+        this.floorCounter.anchor.setTo(0.5);
+        this.addChild(this.floorCounter);
+        this.floorCount = this.game.add.text(-6, -108, this.currentMap);
+
+
+        this.floorCount.font = 'Press Start 2P';
+        this.floorCount.fontSize = 12;
+        this.floorCount.addColor("#96eccf", 0); //red
+        this.addChild(this.floorCount);
+        //this.floorCount = this.game.add.text()
         /*   this.feedButton = this.game.add.sprite(60, 26, 'feedButton');
            this.feedButton.anchor.setTo(0.5);
            this.feedButton.inputEnabled = true;
@@ -188,13 +203,13 @@ class Narrator extends Phaser.Sprite {
            this.openButton.anchor.setTo(0.5);
            this.openButton.inputEnabled = true;  */
         if (this.currentMap != 1) {
-            this.upArrow = this.game.add.sprite(this.x, this.y - 114, 'upArrow');
+            this.upArrow = this.game.add.sprite(this.x, this.y - 128 - 4, 'upArrow');
             this.upArrow.anchor.setTo(0.5);
             this.upArrow.inputEnabled = true;
             this.upArrow.events.onInputDown.add(this._elevatorUp, this);
         }
         if (this.currentMap != 4) {
-            this.downArrow = this.game.add.sprite(this.x, this.y - 84, 'downArrow');
+            this.downArrow = this.game.add.sprite(this.x, this.y - 68 - 4, 'downArrow');
             this.downArrow.anchor.setTo(0.5);
             this.downArrow.inputEnabled = true;
             this.downArrow.events.onInputDown.add(this._elevatorDown, this);
