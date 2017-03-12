@@ -29,7 +29,9 @@ class Narrator extends Phaser.Sprite {
         if (map === 2) {
             this.scientistSays = [
                 "This is tank one.",
-                "Noone gave me notes about this one."
+                "In here we breed the Grubs.",
+                "They're pretty much food for all predators - ",
+                " - in the Chasm."
         ]
         }
         if (map === 3) {
@@ -51,7 +53,12 @@ class Narrator extends Phaser.Sprite {
         if (map === 4) {
             this.scientistSays = [
                 "This is tank Three.",
-                "I think someone peed in there."
+                "We've debated poisoning the tank.",
+                "But we're worried it'd be capable of rupturing it -",
+                "- If agitated.",
+                "It seems to have understood our predicament.",
+                "This thing is kind of the king down here now.",
+                "So we've named it that."
             ]
         }
         this.dialogueProgress = 0;
@@ -63,11 +70,11 @@ class Narrator extends Phaser.Sprite {
 
         if (this.dialogueProgress === 0) {
 
-            this.textBox = this.game.add.sprite(0, 120, 'dialogBox');
+            this.textBox = this.game.add.sprite(0, 120 + 10, 'dialogBox');
             this.textBox.anchor.setTo(0.5);
             this.addChild(this.textBox);
 
-            this.stuffSaid = this.game.add.text(0, 80, this.scientistSays[this.dialogueProgress]);
+            this.stuffSaid = this.game.add.text(0, 80 + 10, this.scientistSays[this.dialogueProgress]);
             this.stuffSaid.bringToTop();
 
             this.stuffSaid.font = 'Press Start 2P';
@@ -80,7 +87,7 @@ class Narrator extends Phaser.Sprite {
             this.stuffSaid.anchor.setTo(0.5, 0.0);
             this.addChild(this.stuffSaid);
             this.stuffSaid.wordWrap = true;
-            this.stuffSaid.wordWrapWidth = 260;
+            this.stuffSaid.wordWrapWidth = 200;
             this.game.time.events.add(Phaser.Timer.SECOND * 8, this._dialogue, this);
         } else if (this.dialogueProgress === this.scientistSays.length) {
 
@@ -111,6 +118,10 @@ class Narrator extends Phaser.Sprite {
     }
 
     _elevatorUp() {
+        this.upArrow.alpha = 0.0;
+        if (this.currentMap != 4) {
+            this.downArrow.alpha = 0.0;
+        }
         this.animations.play('idle', 2, true);
         this.movementHandler = this.game.add.tween(this).to({
             y: -100
@@ -122,7 +133,7 @@ class Narrator extends Phaser.Sprite {
 
 
             if (this.currentMap === 2) {
-                this.game.state.start('TankOne');
+                this.game.state.start('Laboratory');
             }
             if (this.currentMap === 3) {
                 this.game.state.start('TankOne');
@@ -130,11 +141,17 @@ class Narrator extends Phaser.Sprite {
             if (this.currentMap === 4) {
                 this.game.state.start('TankTwo');
             }
+
+
         }, this);
         elevatorGoingDown = false;
     }
 
     _elevatorDown() {
+        if (this.currentMap != 1) {
+            this.upArrow.alpha = 0.0;
+        }
+        this.downArrow.alpha = 0.0;
         this.animations.play('idle', 2, true);
         this.movementHandler = this.game.add.tween(this).to({
             y: 500
@@ -143,50 +160,45 @@ class Narrator extends Phaser.Sprite {
         this.stuffSaid.alpha = 0.0;
         this.textBox.alpha = 0.0;
         this.movementHandler.onComplete.add(function () {
-            
-            
-            
-                      if (this.currentMap=== 2) {
+            if (this.currentMap === 1) {
+                this.game.state.start('TankOne');
+            }
+            if (this.currentMap === 2) {
                 this.game.state.start('TankTwo');
             }
             if (this.currentMap === 3) {
                 this.game.state.start('TankThree');
             }
-            if (this.currentMap === 4) {
-                this.game.state.start('TankThree');
-            }
-            
-            
-            
         }, this);
         elevatorGoingDown = true;
     }
 
 
     _initUi() {
-        this.feedButton = this.game.add.sprite(60, 26, 'feedButton');
-        this.feedButton.anchor.setTo(0.5);
-        this.feedButton.inputEnabled = true;
-        this.feedButton.events.onInputDown.add(this.testLog, this);
+        /*   this.feedButton = this.game.add.sprite(60, 26, 'feedButton');
+           this.feedButton.anchor.setTo(0.5);
+           this.feedButton.inputEnabled = true;
+           this.feedButton.events.onInputDown.add(this.testLog, this);
 
-        this.infoButton = this.game.add.sprite(26, 26, 'infoButton');
-        this.infoButton.anchor.setTo(0.5);
-        this.infoButton.inputEnabled = true;
+           this.infoButton = this.game.add.sprite(26, 26, 'infoButton');
+           this.infoButton.anchor.setTo(0.5);
+           this.infoButton.inputEnabled = true;
 
-        this.openButton = this.game.add.sprite(608, 26, 'openButton');
-        this.openButton.anchor.setTo(0.5);
-        this.openButton.inputEnabled = true;
-
-        this.upArrow = this.game.add.sprite(this.x, this.y - 114, 'upArrow');
-        this.upArrow.anchor.setTo(0.5);
-        this.upArrow.inputEnabled = true;
-        this.upArrow.events.onInputDown.add(this._elevatorUp, this);
-
-        this.downArrow = this.game.add.sprite(this.x, this.y - 84, 'downArrow');
-        this.downArrow.anchor.setTo(0.5);
-        this.downArrow.inputEnabled = true;
-        this.downArrow.events.onInputDown.add(this._elevatorDown, this);
-
+           this.openButton = this.game.add.sprite(608, 26, 'openButton');
+           this.openButton.anchor.setTo(0.5);
+           this.openButton.inputEnabled = true;  */
+        if (this.currentMap != 1) {
+            this.upArrow = this.game.add.sprite(this.x, this.y - 114, 'upArrow');
+            this.upArrow.anchor.setTo(0.5);
+            this.upArrow.inputEnabled = true;
+            this.upArrow.events.onInputDown.add(this._elevatorUp, this);
+        }
+        if (this.currentMap != 4) {
+            this.downArrow = this.game.add.sprite(this.x, this.y - 84, 'downArrow');
+            this.downArrow.anchor.setTo(0.5);
+            this.downArrow.inputEnabled = true;
+            this.downArrow.events.onInputDown.add(this._elevatorDown, this);
+        }
         //        
         //         this.openButton = this.game.add.sprite(608, 26, 'openButton');
         //        this.openButton.anchor.setTo(0.5);
@@ -204,7 +216,7 @@ class Narrator extends Phaser.Sprite {
 
 
     _pointerUpdate() {
-        if (this.feedButton.input.pointerOver()) {
+        /*   if (this.feedButton.input.pointerOver()) {
             this.feedButton.frame = 1;
         } else {
             this.feedButton.frame = 0;
@@ -223,20 +235,22 @@ class Narrator extends Phaser.Sprite {
         } else {
             this.openButton.frame = 0;
         }
-
-
-        if (this.upArrow.input.pointerOver()) {
-            this.upArrow.frame = 1;
-        } else {
-            this.upArrow.frame = 0;
+*/
+        if (this.currentMap != 1) {
+            if (this.upArrow.input.pointerOver()) {
+                this.upArrow.frame = 1;
+            } else {
+                this.upArrow.frame = 0;
+            }
         }
+        if (this.currentMap != 4) {
+            if (this.downArrow.input.pointerOver()) {
+                this.downArrow.frame = 1;
+            } else {
+                this.downArrow.frame = 0;
+            }
 
-        if (this.downArrow.input.pointerOver()) {
-            this.downArrow.frame = 1;
-        } else {
-            this.downArrow.frame = 0;
         }
-
     }
 
 

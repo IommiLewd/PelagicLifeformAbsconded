@@ -1,4 +1,4 @@
-var elevatorGoingDown = true;
+var elevatorGoingDown = false;
 
 class Preload extends Phaser.State {
     preload() {
@@ -7,6 +7,7 @@ class Preload extends Phaser.State {
         this.load.image('creature', 'img/creatureTemplate.png');
         this.load.image('pointer', 'img/pointer.png');
         this.load.image('backTiles', 'img/backTiles.png');
+        this.load.image('tilesetLaboratory', 'img/tilesetLaboratory.png');
 
         this.load.image('overlay', 'img/overlay.png');
 
@@ -21,6 +22,7 @@ class Preload extends Phaser.State {
         this.load.script('TankOne', 'js/map/TankOne.js');
         this.load.script('TankTwo', 'js/map/TankTwo.js');
         this.load.script('TankThree', 'js/map/TankThree.js');
+        this.load.script('Laboratory', 'js/map/Laboratory.js');
         
 
         this.load.tilemap('mainMap', 'json/mainMap.json', null, Phaser.Tilemap.TILED_JSON);
@@ -48,8 +50,10 @@ class Preload extends Phaser.State {
         this.game.state.add('TankOne', TankOne);
           this.game.state.add('TankTwo', TankTwo);
           this.game.state.add('TankThree', TankThree);
+          this.game.state.add('Laboratory', Laboratory);
         
-       this.game.state.start('TankOne');
+      // this.game.state.start('TankOne');
+       this.game.state.start('Laboratory');
       // this.game.state.start('TankTwo');
        //this.game.state.start('TankThree');
         console.log(elevatorGoingDown);
