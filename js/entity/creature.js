@@ -19,18 +19,23 @@ class Creature extends Phaser.Sprite {
         this._initCursor();
         this._creatureModeSelector();
         this._behaviourGenerator();
-         this.idleAnimation = this.animations.add('idle', [0, 1, 2, 3, 4 ,5]);
-         //this.idleAnimation = this.animations.add('idle', [6, 7, 8, 9, 10, 11]);
+         this.idleAnimation = this.animations.add('idle', [10, 11, 12, 13]);
+         this.idleAnimation = this.animations.add('feast', [6, 7, 8, 9]);
+         this.runAnimation = this.animations.add('run', [6, 7, 8, 9]);
+         //this.feastAnimation = this.animations.add('feast', [/*0, 1, 2, 3, 4, 5*/ 10]);
         this.animations.play('idle', 6, true);
-        this.scale.setTo(1.1, 1.1);
+        this.creatureSize = 1.2;
 
     }
     _creatureModeSelector() {
         //  console.log('creaturemode fired  Navigator Alive is: ' + this.navigatorAlive);
         if (this.navigatorAlive === false) {
             this._creatureRandomMovement();
+            this.animations.play('feast', 2, true);
         } else {
+         
             this._moveTo();
+            
         }
     }
 
@@ -56,6 +61,7 @@ class Creature extends Phaser.Sprite {
                 this.body.velocity.x *= -1;
             }
             if (this.randomMovement === 4) {
+                
                 this.body.velocity.x = 0;
             }
             this._creatureModeSelector();
@@ -65,7 +71,7 @@ class Creature extends Phaser.Sprite {
 
     _behaviourGenerator() {
         //         console.log('behaviourGeneneratorFired!!! NavigatorAlive is: ' + this.navigatorAlive);
-        var generator = Math.random() * (6 - 1) + 1;
+        var generator = Math.random() * (3 - 1) + 1;
         generator = Math.floor(generator);
         //console.log('generator is: ' + generator)
         if (this.navigatorAlive === false && generator === 2) {
@@ -85,7 +91,8 @@ class Creature extends Phaser.Sprite {
                 this._generateNavigator(rightSpawnArea, 130);
             }
         }
-        this.game.time.events.add(Phaser.Timer.SECOND * 8, function () {
+        this.game.time.events.add(Phaser.Timer.SECOND * 6, function () {
+               this.animations.play('run', 6, true);
             this._behaviourGenerator();
         }, this);
     }
@@ -149,28 +156,30 @@ class Creature extends Phaser.Sprite {
                 this._cursorReset();
             }
         }
-//        if (this.game.input.activePointer.leftButton.isDown && this.game.time.now > this.inputTimer) {
-//            this.inputTimer = this.game.time.now + 200;
-//            this.testcoordinate = this._map.getTileWorldXY(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 64, 64, 'CollisionLayer');
-//            if (!this.testcoordinate && this.navigatorAlive === false) {
-//                this._addNavigator();
-//            } else if (!this.testcoordinate) {
-//                this._cursorReset();
-//                this._addNavigator();
-//            }
-//        }
+        if (this.game.input.activePointer.leftButton.isDown && this.game.time.now > this.inputTimer) {
+            this.inputTimer = this.game.time.now + 200;
+            this.testcoordinate = this._map.getTileWorldXY(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 64, 64, 'CollisionLayer');
+            if (!this.testcoordinate && this.navigatorAlive === false) {
+                this._addNavigator();
+            } else if (!this.testcoordinate) {
+                this._cursorReset();
+                this._addNavigator();
+            }
+        }
 
         if (this.navigatorAlive === true) {
             if (this.x < this.target.x) {
                 this.body.velocity.x = 70;
                 if (this.body.blocked.right && this.y > this.target.y - 10) {
                     this.body.velocity.y = -40;
+                     this.animations.play('idle', 6, true);
                 }
             }
             if (this.x > this.target.x && this.y > this.target.y - 10) {
                 this.body.velocity.x = -70;
                 if (this.body.blocked.left) {
                     this.body.velocity.y = -40;
+                     this.animations.play('idle', 6, true);
                 }
             }
             if (this.y < this.target.y) {
@@ -184,10 +193,10 @@ class Creature extends Phaser.Sprite {
 
         var direction;
         if (this.body.velocity.x > 0) {
-           // this.scale.setTo(-1, 1);
+            this.scale.setTo(this.creatureSize, this.creatureSize);
             direction = 1;
         } else {
-            //this.scale.setTo(1, 1);
+            this.scale.setTo(-this.creatureSize, this.creatureSize);
             direction = -1;
         }
         var nextX = this.x + direction * (Math.abs(this.width) / 2 + 1);
