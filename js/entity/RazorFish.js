@@ -15,7 +15,7 @@ class RazorFish extends Phaser.Sprite {
         this.inputEnabled = true;
         this.hunger = 100;
         this.inputTimer = 0;
-        this._map = game.add.tilemap('mainMap');
+        this._map = game.add.tilemap('tankOne');
         this._initCursor();
         this._creatureModeSelector();
         this._behaviourGenerator();
@@ -23,15 +23,16 @@ class RazorFish extends Phaser.Sprite {
         this.idleAnimation = this.animations.add('feast', [6, 7, 8, 9]);
         this.runAnimation = this.animations.add('run', [6, 7, 8, 9]);
         //this.feastAnimation = this.animations.add('feast', [/*0, 1, 2, 3, 4, 5*/ 10]);
-        this.animations.play('idle', 6, true);
-        this.creatureSize = 1.2;
+        this.animations.play('feast', 3 , true);
+        this.creatureSize = 1.2; 
+        console.log('Razorfish spawned at - X: ' + this.x + ' And Y : ' + this.y); 
 
     }
     _creatureModeSelector() {
         //  console.log('creaturemode fired  Navigator Alive is: ' + this.navigatorAlive);
         if (this.navigatorAlive === false) {
             this._creatureRandomMovement();
-            this.animations.play('feast', 2, true);
+            this.animations.play('feast', 4, true);
         } else {
 
             this._moveTo();
@@ -77,7 +78,7 @@ class RazorFish extends Phaser.Sprite {
         if (this.navigatorAlive === false && generator === 2) {
             var leftSpawnArea = Math.random() * (250 - 10) + 10;
             var rightSpawnArea = Math.random() * (620 - 400) + 400;
-            if (this.x > 448 && this.body.blocked.down && this.navigatorAlive === false) {
+            if (this.x > 318 && this.body.blocked.down && this.navigatorAlive === false) {
                 var selector = Math.random() * (3 - 0) - 0;
                 selector = Math.floor(selector);
                 if (selector === 1 && this.navigatorAlive === false) {
@@ -86,13 +87,13 @@ class RazorFish extends Phaser.Sprite {
                     this._generateNavigator(leftSpawnArea, 130);
                 }
                 //                          console.log('Generator Check Fired! target is in the middle space');
-            } else if (this.navigatorAlive === false && this.x < 448 && this.body.blocked.down) {
+            } else if (this.navigatorAlive === false && this.x < 318 && this.body.blocked.down) {
                 //                          console.log('Generator Check Fired! target is not in the middle space');
                 this._generateNavigator(rightSpawnArea, 130);
             }
         }
-        this.game.time.events.add(Phaser.Timer.SECOND * 6, function () {
-            this.animations.play('run', 9, true);
+        this.game.time.events.add(Phaser.Timer.SECOND *  5 * generator , function () {
+            this.animations.play('run', 12, true);
             this._behaviourGenerator();
         }, this);
     }
@@ -113,6 +114,16 @@ class RazorFish extends Phaser.Sprite {
 
         }
     }
+    
+    _placeNavigator(){
+        
+                if (this.navigatorAlive === false) {
+                this._generateNavigator(400, 80);
+            } else {
+                this._cursorReset();
+                this._generateNavigator(400, 80);
+            }
+    }
 
     _initCursor() {
         this.cursor = this.game.add.group();
@@ -130,14 +141,14 @@ class RazorFish extends Phaser.Sprite {
         this.target.body.collideWorldBounds = true;
     }
 
-    _addNavigator(x, y) {
-        //  this.target = this.cursor.create(x, y, 'pointer');
-        this.target = this.cursor.create(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 'pointer');
-        this.target.body.bounce.set(0.2);
-        this.navigatorAlive = true;
-        this.target.anchor.setTo(0.5);
-        this.target.body.collideWorldBounds = true;
-    }
+//    _addNavigator(x, y) {
+//        //  this.target = this.cursor.create(x, y, 'pointer');
+//        this.target = this.cursor.create(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 'pointer');
+//        this.target.body.bounce.set(0.2);
+//        this.navigatorAlive = true;
+//        this.target.anchor.setTo(0.5);
+//        this.target.body.collideWorldBounds = true;
+//    }
 
     _cursorReset() {
         this.seededMovement = Math.random() * (20 - 5) + 5;
@@ -149,31 +160,33 @@ class RazorFish extends Phaser.Sprite {
 
     update() {
         if (this.navigatorAlive === true) {
-            if (this.x < this.target.x + 15 && this.x > this.target.x - 15 && this.y && this.y < this.target.y + 15 && this.y && this.y > this.target.y - 15) {
+            if (this.x < this.target.x + 15 && this.x > this.target.x - 15) {
                 this._cursorReset();
             }
         }
-        if (this.game.input.activePointer.leftButton.isDown && this.game.time.now > this.inputTimer) {
-            this.inputTimer = this.game.time.now + 200;
-            this.testcoordinate = this._map.getTileWorldXY(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 64, 64, 'CollisionLayer');
-            if (!this.testcoordinate && this.navigatorAlive === false) {
-                this._addNavigator();
-            } else if (!this.testcoordinate) {
-                this._cursorReset();
-                this._addNavigator();
-            }
-        }
+//        if (this.game.input.activePointer.leftButton.isDown && this.game.time.now > this.inputTimer) {
+//            this.inputTimer = this.game.time.now + 200;
+//            
+//            this._placeNavigator();
+////            this.testcoordinate = this._map.getTileWorldXY(this.game.input.activePointer.worldX, this.game.input.activePointer.worldY, 64, 64, 'CollisionLayer');
+////            if (!this.testcoordinate && this.navigatorAlive === false) {
+////                this._addNavigator();
+////            } else if (!this.testcoordinate) {
+////                this._cursorReset();
+////                this._addNavigator();
+////            }
+//        }
 
         if (this.navigatorAlive === true) {
             if (this.x < this.target.x) {
                 this.animations.play('run', 1, true);
                 this.body.velocity.x = 70;
-                if (this.body.blocked.right && this.y > this.target.y - 10) {
+                if (this.body.blocked.right) {
                     this.body.velocity.y = -40;
                     this.animations.play('idle', 6, true);
                 }
             }
-            if (this.x > this.target.x && this.y > this.target.y - 10) {
+            if (this.x > this.target.x) {
                 this.body.velocity.x = -70;
                 this.animations.play('run', 1, true);
                 if (this.body.blocked.left) {

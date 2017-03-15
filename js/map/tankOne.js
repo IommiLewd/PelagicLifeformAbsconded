@@ -1,12 +1,13 @@
 class TankOne extends Phaser.State {
     constructor() {
         super();
+
     }
 
     _loadLevel() {
         this.game.canvas.oncontextmenu = function (e) {
-                e.preventDefault();
-            }
+            e.preventDefault();
+        }
         this._backgroundImage = this.game.add.image(0, 0, 'backTiles');
         this._map = this.add.tilemap('tankOne');
         this._map.addTilesetImage('tilesetOne', 'tilesetOne');
@@ -17,29 +18,73 @@ class TankOne extends Phaser.State {
 
     }
     _loadCreature() {
-        this.creature = new RazorFish(this.game, 80, 20, 'SlaughterFish' /*, this.map*/ );
+        this.creature = new RazorFish(this.game, 80, 120, 'SlaughterFish' /*, this.map*/ );
+        this.razorGroup.add(this.creature);
+        this.creature = new RazorFish(this.game, 120, 120, 'SlaughterFish' /*, this.map*/ );
+        this.razorGroup.add(this.creature);
+        this.creature = new RazorFish(this.game, 160, 120, 'SlaughterFish' /*, this.map*/ );
+        this.razorGroup.add(this.creature);
         this.game.world.bringToTop(this._front_layer);
     }
-    
-    
-    _addNarrator(){
+
+
+
+
+    _spawnEmitter() {
+        this.emitter = this.game.add.emitter(268, 30, 0);
+        this.emitter.width = 0;
+        this.emitter.makeParticles('food');
+        this.emitter.minParticleSpeed.set(-10, 10);
+        this.emitter.maxParticleSpeed.set(20, 20);
+        this.emitter.minParticleScale = 0.5;
+        this.emitter.maxParticleScale = 0.9;
+        this.emitter.setRotation(0, 50);
+        this.emitter.setAlpha(0.1, 0.6);
+        this.emitter.forEach(function (particle) {
+            particle.body.allowGravity = false;
+        }, this);
+        this.emitter.start(false, 10000, 600);
+
+
+    }
+    _addNarrator() {
         this.narrator = new Narrator(this.game, 768, 206, 'rowan', 2);
     }
     _checkCollision() {
-        this.game.physics.arcade.collide(this.creature, this._collision_layer);
-       this.game.physics.arcade.collide(this.creature.target, this._collision_layer);
+        this.game.physics.arcade.collide(this.razorGroup, this._collision_layer);
+        //       this.game.physics.arcade.collide(this.creature.target, this._collision_layer);
     }
 
+    _addButtons() {
+        this.feedButton = this.game.add.sprite(60, 26, 'feedButton');
+        this.feedButton.anchor.setTo(0.5);
+        this.feedButton.inputEnabled = true;
+        this.feedButton.events.onInputDown.add(this._enableFeed, this);
+
+        this.infoButton = this.game.add.sprite(26, 26, 'infoButton');
+        this.infoButton.anchor.setTo(0.5);
+        this.infoButton.inputEnabled = true;
+
+        this.openButton = this.game.add.sprite(94, 26, 'openButton');
+        this.openButton.anchor.setTo(0.5);
+        this.openButton.inputEnabled = true;
+    }
+    _enableFeed() {
+        this.razorGroup.forEach(function (creature) {
+            creature._placeNavigator();
+        }, this);
+    }
     preload() {
 
     }
     create() {
         console.log('Tank one fired!!!');
         this._loadLevel();
+        this.razorGroup = this.game.add.group();
         this._loadCreature();
-        //this._addScientist();
         this._addNarrator();
-        //this.overlay = this.game.add.image(0, 0, 'overlay');*/
+        this._spawnEmitter();
+        this._addButtons();
     }
     update() {
         this._checkCollision();
@@ -48,8 +93,9 @@ class TankOne extends Phaser.State {
 }
 
 
-
-
+//
+//
+///make the player explodevar emitter = this.game.add.emitter(this.player.x, this.player.y, 100);emitter.makeParticles('playerParticle');emitter.minParticleSpeed.setTo(-200, -200);emitter.maxParticleSpeed.setTo(200, 200);emitter.gravity = 0;emitter.start(true, 1000, null, 100);this.player.kill(); Tilde likes this
 
 
 

@@ -5,8 +5,8 @@ class TankTwo extends Phaser.State {
 
     _loadLevel() {
         this.game.canvas.oncontextmenu = function (e) {
-                e.preventDefault();
-            }
+            e.preventDefault();
+        }
         this._backgroundImage = this.game.add.image(0, 0, 'backTiles');
         this._map = this.add.tilemap('mainMap');
         this._map.addTilesetImage('tileset', 'tileset');
@@ -17,18 +17,19 @@ class TankTwo extends Phaser.State {
 
     }
     _loadCreature() {
-        this.creature = new Creature(this.game, 200, 120, 'SlaughterFish' /*, this.map*/ );
+        this.creature = new RazorFish(this.game, 200, 120, 'SlaughterFish' /*, this.map*/ );
         this.game.world.bringToTop(this._front_layer);
     }
-    
-    
-    _addNarrator(){
+
+
+    _addNarrator() {
         this.narrator = new Narrator(this.game, 768, 206, 'rowan', 3);
     }
     _checkCollision() {
         this.game.physics.arcade.collide(this.creature, this._collision_layer);
-       this.game.physics.arcade.collide(this.creature.target, this._collision_layer);
+        this.game.physics.arcade.collide(this.creature.target, this._collision_layer);
     }
+
 
     preload() {
 
@@ -38,6 +39,7 @@ class TankTwo extends Phaser.State {
         this._loadCreature();
         //this._addScientist();
         this._addNarrator();
+  
         //this.overlay = this.game.add.image(0, 0, 'overlay');
     }
     update() {
